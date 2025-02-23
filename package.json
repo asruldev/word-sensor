@@ -1,6 +1,6 @@
 {
   "name": "word-sensor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple word filtering library for JavaScript/TypeScript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

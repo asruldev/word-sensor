@@ -1,0 +1,16 @@
+{
+  "name": "word-sensor",
+  "version": "1.0.0",
+  "description": "A simple word filtering library for JavaScript/TypeScript",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": ["word-filter", "bad-words", "profanity"],
+  "author": "Asrul Harahap",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}

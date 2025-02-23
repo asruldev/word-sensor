@@ -1,89 +1,101 @@
 # WordSensor
 
-## Description
-`WordSensor` is a TypeScript utility that allows you to censor specific words in a text with options to replace them with a chosen character or remove them entirely.
+🚀 **WordSensor** is a simple and lightweight word filtering library for JavaScript/TypeScript. It helps you detect, replace, or remove forbidden words from text effortlessly.
 
-## Features
-- ✅ **Supports censoring based on a forbidden words list**.
-- ✅ **Can replace words with specific symbols (e.g., `*`, `#`, etc.)**.
-- ✅ **Can remove forbidden words from text**.
-- ✅ **Supports case-insensitive word matching**.
-- ✅ **Allows custom replacement characters per word**.
-- ✅ **Uses regular expressions for more accurate word matching**.
+## ✨ Features
 
-## Installation
-Since this is a TypeScript utility, you can use it directly in your TypeScript project.
+- 🔍 **Detect** prohibited words in text.
+- 🚫 **Replace** forbidden words with a mask (full or partial masking).
+- 🗑️ **Remove** forbidden words from text.
+- 📜 **Customizable** word list and mask characters.
+- 📝 **Logging** feature to track detected words.
+- ✅ Fully tested with Jest.
+
+## 📦 Installation
 
 ```sh
 npm install word-sensor
 ```
 
-Or, simply copy the `WordSensor` class code into your project.
+or
 
-## Usage
-
-```typescript
-import { WordSensor } from "./WordSensor";
-
-const sensor = new WordSensor(["badword", "rude"], "*");
-
-console.log(sensor.filter("This is a badword and it's rude!")); 
-// Output: This is a ******* and it's ****!
-
-sensor.addWord("test", "####");
-console.log(sensor.filter("This is a test.")); 
-// Output: This is a ####.
+```sh
+yarn add word-sensor
 ```
 
-## API
+## 🚀 Usage
 
-### `new WordSensor(words: string[], maskChar: string = "*", caseInsensitive: boolean = true)`
-Creates an instance of `WordSensor` with a list of words to be censored.
+### Import and Initialize
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `words` | `string[]` | `[]` | List of forbidden words. |
-| `maskChar` | `string` | `*` | Character used for censoring. |
-| `caseInsensitive` | `boolean` | `true` | Whether word matching is case-insensitive. |
+```ts
+import { WordSensor } from "word-sensor";
 
-### `addWord(word: string, mask?: string): void`
-Adds a new word to the censor list. If `mask` is provided, the word will be censored with that character.
-
-### `addWords(words: string[]): void`
-Adds multiple words to the censor list.
-
-### `removeWord(word: string): void`
-Removes a word from the censor list.
-
-### `removeWords(words: string[]): void`
-Removes multiple words from the censor list.
-
-### `filter(text: string, mode: "replace" | "remove" = "replace"): string`
-Filters text based on the forbidden words list.
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `text` | `string` | - | The text to be filtered. |
-| `mode` | `"replace" | "remove"` | `"replace"` | Filtering mode: `replace` substitutes words with censor symbols, `remove` deletes words from the text. |
-
-## Advanced Examples
-```typescript
-const sensor = new WordSensor(["example", "test"], "*");
-
-console.log(sensor.filter("This is an example of a test.")); 
-// Output: This is an ******* of a ****.
-
-sensor.addWord("extra", "@#$");
-console.log(sensor.filter("This is an extra example.")); 
-// Output: This is an @#$ *******.
-
-sensor.removeWord("test");
-console.log(sensor.filter("This is a test.")); 
-// Output: This is a test.
+const sensor = new WordSensor(["badword", "offensive"], "*", true, true);
 ```
 
-## License
-This project is released under the MIT license.
+### 🔹 Replacing Forbidden Words
 
-## Author
-[Asrul Harahap](https://github.com/asruldev)
+```ts
+const result = sensor.filter("This is a badword test.");
+console.log(result); // "This is a ******* test."
+```
+
+### 🔹 Custom Masking
+
+```ts
+sensor.addWord("rude", "###");
+const result = sensor.filter("You are rude!");
+console.log(result); // "You are ###!"
+```
+
+### 🔹 Removing Forbidden Words
+
+```ts
+const result = sensor.filter("This is an offensive statement.", "remove");
+console.log(result); // "This is an  statement."
+```
+
+### 🔹 Detecting Forbidden Words
+
+```ts
+const detectedWords = sensor.detect("This contains badword and offensive content.");
+console.log(detectedWords); // ["badword", "offensive"]
+```
+
+### 🔹 Partial Masking
+
+```ts
+const result = sensor.filter("This is a badword test.", "replace", "partial");
+console.log(result); // "This is a b*****d test."
+```
+
+### 🔹 Adding Multiple Words
+
+```ts
+sensor.addWords(["newword", "another"]);
+const result = sensor.filter("This is a newword and another example.");
+console.log(result); // "This is a ******* and ******* example."
+```
+
+### 🔹 Removing Words
+
+```ts
+sensor.removeWord("badword");
+const result = sensor.filter("This is a badword test.");
+console.log(result); // "This is a badword test." (No longer filtered)
+```
+
+### 🔹 Logging Detected Words
+
+```ts
+sensor.filter("badword here.");
+console.log(sensor.getDetectionLogs()); // ["badword"]
+```
+
+## 📜 License
+
+This project is licensed under the **MIT License**.
+
+## 👨‍💻 Author
+
+Developed by [Asrul Harahap](https://github.com/asruldev). Contributions and feedback are welcome! 😊

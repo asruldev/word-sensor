@@ -1,16 +1,50 @@
 {
   "name": "word-sensor",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple word filtering library for JavaScript/TypeScript",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "test": "jest"
   },
-  "keywords": ["word-filter", "bad-words", "profanity"],
+  "keywords": [
+    "word-filter",
+    "bad-words",
+    "profanity"
+  ],
   "author": "Asrul Harahap",
-  "license": "ISC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asruldev/word-sensor.git"
+  },
+  "homepage": "https://github.com/asruldev/word-sensor",
+  "files": [
+    "dist/"
+  ],
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.cjs",
+    "default": "./dist/index.js"
+  },
+  "typesVersions": {
+    "*": {
+      "index.d.ts": [
+        "dist/index.d.ts"
+      ]
+    }
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
   "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.6",
     "typescript": "^5.7.3"
   }
 }

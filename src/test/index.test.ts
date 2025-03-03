@@ -1,4 +1,4 @@
-import { WordSensor } from "./index";
+import { WordSensor } from "../index";
 
 describe("WordSensor", () => {
   let sensor: WordSensor;

@@ -68,7 +68,34 @@ var WordSensor = class {
     return this.detectionLogs;
   }
 };
+function getNestedValue(obj, path) {
+  return path.split(".").reduce((acc, key) => acc && acc[key] !== void 0 ? acc[key] : void 0, obj);
+}
+async function loadForbiddenWordsFromAPI(url, path, sensor) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch: ${response.statusText}`);
+    }
+    const data = await response.json();
+    let words = [];
+    if (Array.isArray(data)) {
+      words = data;
+    } else if (path) {
+      words = getNestedValue(data, path) ?? [];
+    }
+    if (!Array.isArray(words)) {
+      throw new Error("Invalid words format from API");
+    }
+    sensor.addWords(words);
+    console.log("Forbidden words added from API:", words);
+  } catch (error) {
+    console.error("Error loading forbidden words:", error);
+  }
+}
 export {
-  WordSensor
+  WordSensor,
+  getNestedValue,
+  loadForbiddenWordsFromAPI
 };
 //# sourceMappingURL=index.mjs.map

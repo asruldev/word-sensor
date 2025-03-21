@@ -14,5 +14,7 @@ declare class WordSensor {
     detect(text: string): string[];
     getDetectionLogs(): string[];
 }
+declare function getNestedValue(obj: any, path: string): any;
+declare function loadForbiddenWordsFromAPI(url: string, path: string | null, sensor: WordSensor): Promise<void>;
 
-export { WordSensor };
+export { WordSensor, getNestedValue, loadForbiddenWordsFromAPI };

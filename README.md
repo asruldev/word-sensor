@@ -9,6 +9,8 @@
 - 🗑️ **Remove** forbidden words from text.
 - 📜 **Customizable** word list and mask characters.
 - 📝 **Logging** feature to track detected words.
+- 📥 **Async Word Loading** from external APIs.
+- 🔡 **Case-Insensitive Matching** for better detection.
 - ✅ Fully tested with Jest.
 
 ## 📦 Installation
@@ -90,6 +92,26 @@ console.log(result); // "This is a badword test." (No longer filtered)
 ```ts
 sensor.filter("badword here.");
 console.log(sensor.getDetectionLogs()); // ["badword"]
+```
+
+### 🔹 Async Word Loading
+
+Load forbidden words from an external API.
+
+```ts
+await sensor.loadWordsFromAPI("https://api.example.com/forbidden-words");
+const result = sensor.filter("This contains a forbidden word.");
+console.log(result); // "This contains a ******** word."
+```
+
+### 🔹 Case-Insensitive Matching
+
+Enable case-insensitive word matching.
+
+```ts
+sensor.setCaseInsensitive(true);
+const result = sensor.filter("This contains BADWORD and badword.");
+console.log(result); // "This contains ******* and *******.
 ```
 
 ## 📜 License

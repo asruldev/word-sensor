@@ -98,3 +98,41 @@ export class WordSensor {
     return this.detectionLogs;
   }
 }
+
+export function getNestedValue(obj: any, path: string): any {
+  return path
+    .split(".")
+    .reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
+}
+
+export async function loadForbiddenWordsFromAPI(
+  url: string,
+  path: string | null,
+  sensor: WordSensor
+) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+
+    let words: string[] = [];
+
+    if (Array.isArray(data)) {
+      words = data; // Jika API langsung berupa array
+    } else if (path) {
+      words = getNestedValue(data, path) ?? [];
+    }
+
+    if (!Array.isArray(words)) {
+      throw new Error("Invalid words format from API");
+    }
+
+    sensor.addWords(words);
+    console.log("Forbidden words added from API:", words);
+  } catch (error) {
+    console.error("Error loading forbidden words:", error);
+  }
+}
